@@ -1,0 +1,7 @@
+name: Registrator
+version: '${project.version}'
+main: me.kuboeb69.registrator.Registrator
+api-version: 1.17
+commands:
+  reg:
+  login:
