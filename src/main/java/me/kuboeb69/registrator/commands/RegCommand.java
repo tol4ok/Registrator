@@ -38,7 +38,7 @@ public class RegCommand implements CommandExecutor {
         _plugin.getConfig().set("registered-players." + sender.getName() + ".is-logined", true);
         _plugin.saveConfig();
 
-        sender.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Вы были успешно зарегестрированны(заскамленны)");
+        sender.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Вы были успешно зарегестрированны");
         return true;
     }
 

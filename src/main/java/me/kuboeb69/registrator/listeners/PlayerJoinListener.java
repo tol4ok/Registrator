@@ -22,29 +22,26 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         FileConfiguration config = _plugin.getConfig();
+        long delay = 600;
 
         if(!config.contains("registered-players." + player.getName()))
             player.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "Команда для регистрации \"/reg <пароль> <повтор_пароля>\"");
         else {
+            player.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "Если вы не регистрировались ранее, значит другой игрок уже регистрировался с таким же никнеймом");
             player.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "Команда для входа \"/login <пароль>\"");
 
             config.set("registered-players." + player.getName() + ".is-logined", false);
             _plugin.saveConfig();
         }
-            player.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "Команда для входа \"/login <пароль>\"");
 
         new BukkitRunnable() {
-            byte seconds_left = 60;
-
             @Override
             public void run() {
-                if (seconds_left == 0)
-                    player.kickPlayer("Не выполнен вход");
-                else if (_plugin.getConfig().contains("registered-players." + player.getName()))
+                if (_plugin.getConfig().getBoolean("registered-players." + player.getName() + ".is-logined"))
                     cancel();
-                seconds_left -= 5;
+                else
+                    player.kickPlayer("Не выполнен вход");
             }
-
-        }.runTaskTimer(_plugin, 0, 100);
+        }.runTaskTimer(_plugin, delay, 0);
     }
 }
